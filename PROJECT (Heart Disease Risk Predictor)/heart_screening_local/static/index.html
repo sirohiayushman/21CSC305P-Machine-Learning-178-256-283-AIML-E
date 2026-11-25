@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1423">
+  <title>CardioScope — Screening Research Studio</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-symbol">✳</span><span>cardio<span class="brand-accent">scope</span><small>SCREENING RESEARCH STUDIO</small></span></a>
+    <div class="side-section">WORKSPACE</div>
+    <a class="nav active" href="#screening"><span class="nav-icon">◇</span> Screening workspace</a>
+    <a class="nav" href="#methodology"><span class="nav-icon">▤</span> Model methodology</a>
+    <div class="side-section" style="margin-top:34px">SYSTEM STATUS</div>
+    <div id="modelStatus" class="status-box"><span class="status-dot"></span>Checking local model…</div>
+    <div class="sidebar-bottom"><span class="shield">✦</span><strong>Privacy-first prototype</strong><p>Runs on your computer. Responses are not sent to an external prediction service.</p><span class="small-chip">LOCALHOST ONLY</span></div>
+  </aside>
+  <main id="screening" class="main">
+    <header class="topbar"><div class="breadcrumb">Research tools <span>/</span> Heart attack history</div><div class="right-top"><span class="env-chip"><span class="online-dot"></span> LOCAL ENVIRONMENT</span><span class="avatar">ML</span></div></header>
+    <section class="hero"><div class="eyebrow"><span class="eyebrow-line"></span> MACHINE LEARNING · CLINICAL RESEARCH DEMO</div><h1>Understand the signals.<br><em>Never ignore the uncertainty.</em></h1><p>Explore a calibrated machine-learning screening model using the BRFSS 2022 self-reported heart-attack-history dataset.</p><div class="hero-pills"><span>◉ Recall-aware decision threshold</span><span>◇ Leakage-safe preprocessing</span><span>▥ Research-only</span></div></section>
+    <div class="content-grid">
+      <div class="column-main">
+        <section class="card intake-card"><div class="section-heading"><div><div class="section-kicker">01 / SUBJECT INFORMATION</div><h2>Screening questionnaire</h2><p>Enter survey answers. Fields marked <b>*</b> are required; missing answers are handled by the fitted preprocessing pipeline, but reduce reliability.</p></div><div class="steps-icon">01</div></div>
+          <form id="screeningForm" novalidate>
+            <div id="formSections" class="form-sections"><div class="skeleton">Loading questionnaire fields…</div></div>
+            <div class="form-footer"><div><strong>Need to make changes?</strong><span>All data stays in this local browser session.</span></div><div class="form-actions"><button class="reset-btn" type="reset">Clear all</button><button id="predictBtn" type="submit" class="submit-btn" disabled><span>Run screening</span><span class="btn-arrow">↗</span></button></div></div>
+          </form>
+        </section>
+        <section class="card result-card hidden" id="resultPanel" aria-live="polite"><div class="section-kicker">02 / RESULTS</div><h2>Screening result</h2><div class="result-body"><div id="scoreRing" class="score-ring"><div><span id="scoreValue">–</span><small>MODEL SCORE</small></div></div><div class="result-info"><div class="result-status" id="resultStatus">–</div><h3 id="resultHeadline">–</h3><p id="resultExplanation">–</p><div class="mini-metrics"><div><span>Threshold</span><strong id="resultThreshold">–</strong></div><div><span>Provided inputs</span><strong id="resultInputs">–</strong></div></div></div></div><div id="missingNotice" class="missing-notice hidden"></div><div class="emergency-note"><strong>Important:</strong> A low score is not a medical clearance. For possible heart-attack symptoms, seek emergency care immediately rather than using this tool.</div></section>
+      </div>
+      <aside class="column-aside"><section class="sidecard decision-card"><div class="section-kicker">SCREENING CONFIGURATION</div><h3>Choose sensitivity</h3><p>Higher sensitivity catches more historical positive cases, but usually creates more false alarms.</p><div class="mode-options"><label class="mode-item"><input name="mode" type="radio" value="cautious" checked><span class="mode-content"><strong>Recall-focused <span class="reco">DEFAULT</span></strong><small>Validation cost: false negative = 5× false positive</small></span></label><label class="mode-item"><input name="mode" type="radio" value="balanced"><span class="mode-content"><strong>Balanced F1</strong><small>Trades off precision and recall</small></span></label><label class="mode-item" id="highRecallOption"><input name="mode" type="radio" value="high_recall"><span class="mode-content"><strong>High recall target</strong><small>Targets ≥80% on threshold-validation data, if feasible</small></span></label></div></section>
+      <section class="sidecard model-card" id="methodology"><div class="section-kicker">MODEL INTELLIGENCE</div><h3>About this model</h3><div class="model-title"><span class="cube">▧</span><div><strong id="selectedModel">CatBoost classifier</strong><small id="selectedVariant">Awaiting local model artifact</small></div></div><div class="stat-grid"><div><span>Inputs after engineering</span><strong id="featureCount">—</strong></div><div><span>Selected features</span><strong id="selectedFeatures">—</strong></div></div><div class="model-desc">The notebook applies log transforms, comorbidity score, interaction terms, binned indicators, encoding and training-only imputations. Retraining can also compare MI → Pearson → VIF feature reduction.</div></section>
+      <section class="sidecard benchmark-card"><div class="section-kicker">NOTEBOOK REFERENCE</div><div class="benchmark-head"><h3>Reported test metrics</h3><span>REFERENCE ONLY</span></div><p>Original CatBoost at its validation-selected cost-weighted threshold (not measured for your local artifact).</p><div class="benchmark-number"><strong>62.43%</strong><span>Recall</span></div><div class="benchmark-track"><span></span></div><div class="reference-stats"><span>Accuracy <b>91.08%</b></span><span>Precision <b>34.31%</b></span></div></section>
+      <div class="info-note"><span>ⓘ</span><p><strong>What this data actually measures:</strong> Whether a respondent reported having had a heart attack in the past. It does not determine the probability of a future heart attack.</p></div>
+      </aside>
+    </div>
+    <footer>CardioScope · Educational ML prototype · Not a clinical diagnostic device</footer>
+  </main>
+</div>
+<script src="/static/app.js" defer></script>
+</body>
+</html>
